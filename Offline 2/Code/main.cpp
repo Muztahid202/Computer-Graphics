@@ -4,7 +4,7 @@
 int main()
 {
 
-    filesystem::create_directory("Output");
+    filesystem::create_directory("../Output");
 
     double eyeX, eyeY, eyeZ;
     double lookX, lookY, lookZ;
@@ -17,7 +17,7 @@ int main()
     // Stage 1: Model Transformation
     {
         ifstream sceneFile(sceneFilePath);
-        ofstream stage1File("Output/stage1.txt");
+        ofstream stage1File("../Output/stage1.txt");
 
         // Set precision for output
         stage1File << fixed << setprecision(7);
@@ -99,8 +99,8 @@ int main()
     {
         // Reopen scene.txt for reading view parameters
         ifstream sceneFile(sceneFilePath);
-        ifstream stage1File("Output/stage1.txt");
-        ofstream stage2File("Output/stage2.txt");
+        ifstream stage1File("../Output/stage1.txt");
+        ofstream stage2File("../Output/stage2.txt");
 
         // Read gluLookAt parameters from scene.txt
         sceneFile >> eyeX >> eyeY >> eyeZ;
@@ -142,8 +142,8 @@ int main()
     {
         // Reopen scene.txt for reading perspective parameters
         ifstream sceneFile(sceneFilePath);
-        ifstream stage2File("Output/stage2.txt");
-        ofstream stage3File("Output/stage3.txt");
+        ifstream stage2File("../Output/stage2.txt");
+        ofstream stage3File("../Output/stage3.txt");
 
         // Create projection matrix
         Matrix P = createProjectionMatrix(fovY, aspectRatio, near, far);
@@ -198,7 +198,7 @@ int main()
         image.set_all_channels(0, 0, 0); // Black background
 
         // Read triangles from config file
-        vector<Triangle> triangles = readTrianglesFromFile("Output/stage3.txt");
+        vector<Triangle> triangles = readTrianglesFromFile("../Output/stage3.txt");
 
         // creating a vector that will store the Cofactor objects
         vector<Cofactor> cofactors;
@@ -241,8 +241,8 @@ int main()
         scanLineAlgorithm(triangles, Top_Y, Bottom_Y, Left_X, Right_X, dy, dx, cofactors, zFront, zRear, zBuffer, image);
 
         // Save outputs
-        image.save_image("Output/out.bmp");
-        saveZBuffer("Output/z-buffer.txt", zBuffer, screenWidth, screenHeight, zRear);
+        image.save_image("../Output/out.bmp");
+        saveZBuffer("../Output/z-buffer.txt", zBuffer, screenWidth, screenHeight, zRear);
 
         // Free memory
         for (int i = 0; i < screenHeight; i++)
